@@ -18,6 +18,7 @@ export const authOptions: AuthOptions = {
                 password: { label: "Password", type: "password" }
             },
             async authorize(credentials) {
+                console.log('credentials', credentials)
                 if (!credentials?.email || !credentials?.password) {
                     throw new Error('Invalid Credentials')
                 }
@@ -28,8 +29,10 @@ export const authOptions: AuthOptions = {
                     }
                 });
 
+                console.log('user', user)
+
                 if (!user) throw new Error('Invalid Credentials')
-                const isValidPassword = bcrypt.compare(credentials.password, user.password);
+                const isValidPassword = await bcrypt.compare(credentials.password, user.password);
                 if (!isValidPassword) throw new Error('Invalid Credentials')
 
                 return user;
