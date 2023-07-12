@@ -4,6 +4,7 @@ module.exports = {
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
+    'node_modules/preline/dist/*.js',
   ],
   theme: {
     extend: {
@@ -18,5 +19,7 @@ module.exports = {
     require('@tailwindcss/forms')({
       strategy: 'class',
     }),
+    require('preline/plugin'),
   ],
+  darkMode: 'class',
 };
