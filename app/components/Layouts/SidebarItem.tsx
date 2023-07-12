@@ -12,8 +12,11 @@ interface SidebarItemProps {
 
 const SidebarItem = (props: SidebarItemProps) => {
   const className = clsx([
-    'flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md hover:bg-slate-200 transition-colors',
-    props.isActive ? 'bg-slate-100' : 'bg-transparent',
+    'flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md transition-colors',
+    props.isActive ? 'bg-slate-100 text-sky-600' : 'bg-transparent',
+    props.type === 'button'
+      ? 'w-full hover:bg-rose-600 hover:text-white'
+      : 'hover:bg-slate-200',
   ]);
   return props.type === 'link' ? (
     <div>
@@ -42,7 +45,7 @@ const SidebarItem = (props: SidebarItemProps) => {
     </div>
   ) : (
     <div>
-      <button className={className + ' w-full'} onClick={props.onClick}>
+      <button className={className} onClick={props.onClick}>
         {props.icon ? (
           props.icon
         ) : (

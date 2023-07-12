@@ -1,6 +1,56 @@
 'use client';
 import SidebarItem from './SidebarItem';
 import { signOut } from 'next-auth/react';
+import { usePathname } from 'next/navigation';
+
+const SidebarItems = () => {
+  const pathname = usePathname();
+
+  const items = [
+    {
+      title: 'Dashboard',
+      icon: <HomeIcon />,
+      link: '/dashboard',
+    },
+    {
+      title: 'Rooms',
+      icon: <CubeIcon />,
+      link: '/dashboard/rooms',
+    },
+    {
+      title: 'Users',
+      icon: <UsersIcon />,
+      link: '/dashboard/users',
+    },
+  ];
+  return (
+    <nav
+      className="flex flex-col flex-wrap justify-between w-full h-full p-6 hs-accordion-group"
+      data-hs-accordion-always-open
+    >
+      <div className="space-y-1.5">
+        {items.map((item) => {
+          return (
+            <SidebarItem
+              key={item.title + '_' + new Date().toISOString()}
+              title={item.title}
+              icon={item.icon}
+              link={item.link}
+              isActive={item.link === pathname}
+              type="link"
+            />
+          );
+        })}
+      </div>
+      <SidebarItem
+        title="Logout"
+        type="button"
+        onClick={() => signOut()}
+        icon={<ArrowLeftOnRectangleIcon />}
+      />
+    </nav>
+  );
+};
 
 const ArrowLeftOnRectangleIcon = () => {
   return (
@@ -62,45 +112,23 @@ const UsersIcon = () => {
   );
 };
 
-const SidebarItems = () => {
-  const items = [
-    {
-      title: 'Dashboard',
-      icon: <HomeIcon />,
-      link: '/dashboard',
-    },
-    {
-      title: 'Users',
-      icon: <UsersIcon />,
-      link: '/dashboard/users',
-    },
-  ];
+const CubeIcon = () => {
   return (
-    <nav
-      className="flex flex-col flex-wrap justify-between w-full h-full p-6 hs-accordion-group"
-      data-hs-accordion-always-open
+    <svg
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+      className="w-4 h-4"
     >
-      <div className="space-y-1.5">
-        {items.map((item) => {
-          return (
-            <SidebarItem
-              key={item.title + '_' + new Date().toISOString()}
-              title={item.title}
-              icon={item.icon}
-              link={item.link}
-              isActive={item.link === window.location.pathname}
-              type="link"
-            />
-          );
-        })}
-      </div>
-      <SidebarItem
-        title="Logout"
-        type="button"
-        onClick={() => signOut()}
-        icon={<ArrowLeftOnRectangleIcon />}
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9"
       />
-    </nav>
+    </svg>
   );
 };
 
