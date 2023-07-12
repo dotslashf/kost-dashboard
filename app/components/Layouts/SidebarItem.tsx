@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import React from 'react';
 
 interface SidebarItemProps {
@@ -6,11 +7,14 @@ interface SidebarItemProps {
   link?: string;
   type: 'link' | 'button';
   onClick?: () => void;
+  isActive?: boolean;
 }
 
 const SidebarItem = (props: SidebarItemProps) => {
-  const className =
-    'flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300';
+  const className = clsx([
+    'flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md hover:bg-slate-200 transition-colors',
+    props.isActive ? 'bg-slate-100' : 'bg-transparent',
+  ]);
   return props.type === 'link' ? (
     <div>
       <a className={className} href={props.link}>

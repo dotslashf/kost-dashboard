@@ -45,8 +45,8 @@ const Input: React.FC<InputProps> = ({
             shadow-sm
             ring-1
             ring-inset
-            ring-gray-300
-            placeholder:text-gray-400
+            ring-slate-300
+            placeholder:text-slate-400
             focus:ring-2
             focus:ring-inset
             focus:ring-orange-300

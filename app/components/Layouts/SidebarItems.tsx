@@ -88,6 +88,7 @@ const SidebarItems = () => {
               title={item.title}
               icon={item.icon}
               link={item.link}
+              isActive={item.link === window.location.pathname}
               type="link"
             />
           );
