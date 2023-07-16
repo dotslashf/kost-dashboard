@@ -10,6 +10,7 @@ interface ButtonProps {
   secondary?: boolean;
   danger?: boolean;
   disabled?: boolean;
+  data_hs_overlay?: string;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -20,6 +21,7 @@ const Button: React.FC<ButtonProps> = ({
   onClick,
   secondary,
   type,
+  data_hs_overlay,
 }) => {
   return (
     <button
@@ -30,7 +32,7 @@ const Button: React.FC<ButtonProps> = ({
         `
         flex
         justify-center
-        py-2
+        py-3
         px-3
         rounded-md
         text-sm
@@ -42,12 +44,15 @@ const Button: React.FC<ButtonProps> = ({
       `,
         disabled && 'opacity-50 cursor-default',
         fullWidth && 'w-full',
-        secondary ? 'text-slate-800' : 'text-white',
+        secondary
+          ? 'text-slate-800 bg-slate-100 hover:bg-slate-200'
+          : 'text-white',
         danger && 'bg-rose-500 hover:bg-rose-600 focus-visible:ring-rose-500',
         !secondary &&
           !danger &&
           'bg-sky-300 hover:bg-sky-500 focus-visible:ring-sky-500'
       )}
+      data-hs-overlay={data_hs_overlay}
     >
       {children}
     </button>
