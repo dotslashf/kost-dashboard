@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import Button from './Button';
 
 interface ModalProps {
@@ -5,6 +6,7 @@ interface ModalProps {
   title?: string;
   children: React.ReactNode;
   onSubmitted?: () => void;
+  isLoading?: boolean;
 }
 
 const Modal = (props: ModalProps) => {
@@ -42,10 +44,12 @@ const Modal = (props: ModalProps) => {
           </div>
           <div className="p-4 overflow-y-auto">{props.children}</div>
           <div className="flex items-center justify-end px-4 py-3 border-t gap-x-2 dark:border-gray-700">
-            <Button secondary data_hs_overlay={'#' + props.id}>
+            <Button secondary dataHsOverlay={'#' + props.id}>
               Close
             </Button>
-            <Button onClick={props.onSubmitted}>Save Changes</Button>
+            <Button isLoading={props.isLoading} onClick={props.onSubmitted}>
+              Save Changes
+            </Button>
           </div>
         </div>
       </div>

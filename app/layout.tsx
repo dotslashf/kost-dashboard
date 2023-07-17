@@ -3,7 +3,6 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import AuthContext from './context/AuthContext';
 import ToasterContext from './context/ToasterContext';
-import PrelineContext from './context/PrelineContext';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -19,12 +18,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+      <body className="h-screen">
         <AuthContext>
-          <PrelineContext>
-            <ToasterContext />
-            {children}
-          </PrelineContext>
+          <ToasterContext />
+          {children}
         </AuthContext>
       </body>
     </html>
