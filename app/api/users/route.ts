@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { getToken } from "next-auth/jwt"
 import bcrypt from 'bcrypt';
 import prisma from '@/app/libs/prisma';
+import { NextApiRequest, NextApiResponse } from 'next';
 
 export async function POST(req: any) {
     const token = await getToken({ req })
@@ -27,5 +28,32 @@ export async function POST(req: any) {
     return NextResponse.json({
         message: 'User created successfully',
         data: newUser
+    })
+}
+
+export async function GET(req: NextApiRequest) {
+    const token = await getToken({ req })
+    if (token?.role !== 'ADMIN') return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401 });
+    const users = await prisma.user.findMany({
+        select: {
+            id: true,
+            email: true,
+            name: true,
+            role: true,
+            createdAt: true,
+            room: {
+                select: {
+                    id: true,
+                    name: true,
+                }
+            }
+        },
+        where: {
+            role: 'USER'
+        }
+    });
+
+    return NextResponse.json({
+        users
     })
 }

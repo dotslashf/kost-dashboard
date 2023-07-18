@@ -3,15 +3,9 @@ import SidebarItems from './SidebarItems';
 const Sidebar = () => {
   return (
     <>
-      <div className="sticky inset-x-0 top-0 z-20 px-4 bg-white border-y sm:px-6 md:px-8 lg:hidden dark:bg-slate-800 dark:border-slate-700">
+      <div className="sticky inset-x-0 top-0 px-4 bg-white border-y sm:px-6 md:px-8 lg:hidden dark:bg-slate-800 dark:border-slate-700">
         <div className="flex items-center py-4">
-          <button
-            type="button"
-            className="text-slate-500 hover:text-slate-600"
-            data-hs-overlay="#application-sidebar"
-            aria-controls="application-sidebar"
-            aria-label="Toggle navigation"
-          >
+          <button type="button" className="text-slate-500 hover:text-slate-600">
             <span className="sr-only">Toggle Navigation</span>
             <svg
               className="w-5 h-5"
@@ -30,7 +24,7 @@ const Sidebar = () => {
       </div>
       <div
         id="application-sidebar"
-        className="hs-overlay hs-overlay-open:translate-x-0 -translate-x-full transition-all duration-300 transform hidden fixed top-0 left-0 bottom-0 z-[55] w-64 bg-white border-r border-slate-200 pt-7 pb-10 overflow-y-auto scrollbar-y lg:block lg:translate-x-0 lg:right-auto lg:bottom-0 dark:scrollbar-y dark:bg-slate-800 dark:border-slate-700"
+        className="fixed top-0 bottom-0 left-0 hidden w-64 pb-10 -translate-x-full bg-white border-r hs-overlay border-slate-200 pt-7 lg:block lg:translate-x-0 lg:right-auto lg:bottom-0 dark:scrollbar-y dark:bg-slate-800 dark:border-slate-700"
       >
         <div className="px-6 text-sky-600">
           <a

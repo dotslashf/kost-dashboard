@@ -19,6 +19,7 @@ import {
 import { useEffect, useState } from 'react';
 import { SubmitHandler, FieldValues, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { mutate } from 'swr';
 
 export function ModalUser() {
   const [isLoading, setIsLoading] = useState(false);
@@ -55,7 +56,8 @@ export function ModalUser() {
       .then(async (res) => {
         if (res.ok) {
           setIsOpen(false);
-          // set form to default values
+          toast.success('User added');
+          mutate('/api/users');
         } else {
           const { error } = await res.json();
           throw new Error(error);
