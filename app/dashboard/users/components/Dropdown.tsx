@@ -57,7 +57,7 @@ export default function Dropdown({ id, roomId }: DropdownProps) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+        <DropdownMenuLabel>Aksi</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem
           onClick={() => {
@@ -65,7 +65,7 @@ export default function Dropdown({ id, roomId }: DropdownProps) {
           }}
         >
           <Pencil2Icon className="w-4 h-4 mr-2" />
-          Edit
+          Ubah
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <AlertConfirmation
@@ -93,7 +93,7 @@ export function AlertConfirmation({ onConfirm }: AlertConfirmationProps) {
         {/* <Button variant="ghost"> */}
         <span className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 hover:bg-destructive hover:text-destructive-foreground">
           <TrashIcon className="w-4 h-4 mr-2" />
-          Delete
+          Hapus
         </span>
         {/* </Button> */}
       </AlertDialogTrigger>

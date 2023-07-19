@@ -19,12 +19,12 @@ const SidebarItems = () => {
       link: '/dashboard',
     },
     {
-      title: 'Rooms',
+      title: 'Kamar',
       icon: <CubeIcon className="mr-4" />,
       link: '/dashboard/rooms',
     },
     {
-      title: 'Users',
+      title: 'Penghuni',
       icon: <PersonIcon className="mr-4" />,
       link: '/dashboard/users',
     },
@@ -46,7 +46,7 @@ const SidebarItems = () => {
         })}
       </div>
       <SidebarItem
-        title="Logout"
+        title="Keluar"
         type="button"
         onClick={() => signOut()}
         icon={<ExitIcon className="mr-4" />}

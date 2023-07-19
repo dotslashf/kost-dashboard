@@ -37,18 +37,17 @@ export interface UserWithRoom extends User {
 export const columns: ColumnDef<UserWithRoom>[] = [
   {
     accessorKey: 'name',
-    header: 'Name',
-  },
-  {
-    accessorKey: 'email',
-    header: 'Email',
+    header: 'Nama',
+    cell: ({ row }) => {
+      return <span className="flex w-[180px]">{row.original.name}</span>;
+    },
   },
   {
     accessorKey: 'createdAt',
     header: 'Tanggal Daftar',
     cell: ({ row }) => {
       return (
-        <span className="flex items-center">
+        <span className="flex w-[180px] items-center">
           <ClockIcon className="w-4 h-4 mr-2" />{' '}
           {formatDate(row.original.createdAt)}
         </span>
@@ -57,19 +56,21 @@ export const columns: ColumnDef<UserWithRoom>[] = [
   },
   {
     accessorKey: 'room',
-    header: 'Room',
+    header: 'Kamar',
     cell: ({ row }) => {
       const room = row.original.room;
       return (
-        <Badge variant="default" className="cursor-pointer">
-          {room?.name ? room.name : 'Empty'}
-        </Badge>
+        <span className="flex w-[100px]">
+          <Badge variant="default" className="cursor-pointer">
+            {room?.name ? room.name : 'Empty'}
+          </Badge>
+        </span>
       );
     },
   },
   {
     id: 'actions',
-    header: () => <div className="text-center">Actions</div>,
+    header: '',
     cell: ({ row }) => {
       const user = row.original;
       return (
@@ -101,10 +102,10 @@ export function DataTable<TData, TValue>({
     <div className="flex flex-col">
       <div className="relative mb-4">
         <Input
-          placeholder="Cari email..."
-          value={(table.getColumn('email')?.getFilterValue() as string) ?? ''}
+          placeholder="Cari nama..."
+          value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
           onChange={(event) =>
-            table.getColumn('email')?.setFilterValue(event.target.value)
+            table.getColumn('name')?.setFilterValue(event.target.value)
           }
           className="max-w-sm pl-11"
         />
@@ -153,9 +154,9 @@ export function DataTable<TData, TValue>({
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className="h-24 text-center"
+                  className="h-16 text-center"
                 >
-                  No results.
+                  Tidak ada data
                 </TableCell>
               </TableRow>
             )}

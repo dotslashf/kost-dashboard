@@ -11,6 +11,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import {
+  CheckIcon,
   EnvelopeClosedIcon,
   LetterCaseCapitalizeIcon,
   PlusIcon,
@@ -110,7 +111,8 @@ export function ModalUser() {
             </Button>
           ) : (
             <Button type="submit" onClick={handleSubmit(onSubmit)}>
-              Save changes
+              <CheckIcon className="w-4 h-4 mr-2" />
+              Simpan
             </Button>
           )}
         </DialogFooter>
