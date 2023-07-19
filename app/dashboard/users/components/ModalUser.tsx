@@ -75,7 +75,7 @@ export function ModalUser() {
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button>
-          <PlusIcon className="w-4 h-4 mr-2" /> Add User
+          <PlusIcon className="w-4 h-4 mr-2" /> Tambah Penghuni
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-sm md:max-w-md">

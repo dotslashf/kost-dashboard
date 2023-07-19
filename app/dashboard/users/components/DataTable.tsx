@@ -45,10 +45,10 @@ export const columns: ColumnDef<UserWithRoom>[] = [
   },
   {
     accessorKey: 'createdAt',
-    header: 'Date Join',
+    header: 'Tanggal Daftar',
     cell: ({ row }) => {
       return (
-        <span className="inline-flex items-center">
+        <span className="flex items-center">
           <ClockIcon className="w-4 h-4 mr-2" />{' '}
           {formatDate(row.original.createdAt)}
         </span>

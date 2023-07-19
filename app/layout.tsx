@@ -18,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="h-screen">
+      <body className="w-full min-h-screen">
         <AuthContext>
           <ToasterContext />
           {children}

@@ -1,30 +1,31 @@
+'use client';
+
+import { useState } from 'react';
 import SidebarItems from './SidebarItems';
+import clsx from 'clsx';
+import { Button } from '@/components/ui/button';
+import { HamburgerMenuIcon } from '@radix-ui/react-icons';
 
 const Sidebar = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   return (
     <>
-      <div className="sticky inset-x-0 top-0 px-4 bg-white border-y sm:px-6 md:px-8 lg:hidden dark:bg-slate-800 dark:border-slate-700">
-        <div className="flex items-center py-4">
-          <button type="button" className="text-slate-500 hover:text-slate-600">
-            <span className="sr-only">Toggle Navigation</span>
-            <svg
-              className="w-5 h-5"
-              width="16"
-              height="16"
-              fill="currentColor"
-              viewBox="0 0 16 16"
-            >
-              <path
-                fillRule="evenodd"
-                d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
-              />
-            </svg>
-          </button>
+      <div
+        className="sticky inset-x-0 top-0 px-4 bg-white border-y sm:px-6 md:px-8 lg:hidden dark:bg-slate-800 dark:border-slate-700"
+        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+      >
+        <div className="flex justify-end py-2">
+          <Button variant={'secondary'}>
+            <HamburgerMenuIcon className="mr-4" />
+            <span className="no-underline">Menu</span>
+          </Button>
         </div>
       </div>
       <div
-        id="application-sidebar"
-        className="fixed top-0 bottom-0 left-0 hidden w-64 pb-10 -translate-x-full bg-white border-r hs-overlay border-slate-200 pt-7 lg:block lg:translate-x-0 lg:right-auto lg:bottom-0 dark:scrollbar-y dark:bg-slate-800 dark:border-slate-700"
+        className={clsx(
+          'fixed top-0 bottom-0 left-0 w-64 pb-10 bg-white border-r hs-overlay border-slate-200 pt-7 lg:block lg:translate-x-0 lg:right-auto lg:bottom-0 dark:scrollbar-y dark:bg-slate-800 dark:border-slate-700 transition z-30',
+          isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        )}
       >
         <div className="px-6 text-sky-600">
           <a

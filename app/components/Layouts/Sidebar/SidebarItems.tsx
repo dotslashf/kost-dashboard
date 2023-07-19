@@ -30,7 +30,7 @@ const SidebarItems = () => {
     },
   ];
   return (
-    <nav className="flex flex-col flex-wrap justify-between w-full h-full p-6 hs-accordion-group">
+    <nav className="flex flex-col flex-wrap justify-between w-full h-full p-6">
       <div className="space-y-1.5">
         {items.map((item) => {
           return (

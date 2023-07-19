@@ -3,7 +3,6 @@
 import fetcher from '@/app/libs/fetcher';
 import DataTable, { UserWithRoom, columns } from './DataTable';
 import useSWR from 'swr';
-import { User } from '@prisma/client';
 
 export default function Table() {
   const { data, error } = useSWR<{ users: UserWithRoom[] }>(
