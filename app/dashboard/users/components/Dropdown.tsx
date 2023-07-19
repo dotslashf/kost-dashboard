@@ -9,7 +9,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Pencil2Icon } from '@radix-ui/react-icons';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
+import { CheckIcon, Cross2Icon, Pencil2Icon } from '@radix-ui/react-icons';
 import { MoreHorizontal, TrashIcon } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { mutate } from 'swr';
@@ -57,18 +68,56 @@ export default function Dropdown({ id, roomId }: DropdownProps) {
           <Pencil2Icon className="w-4 h-4 mr-2" />
           Edit
         </DropdownMenuItem>
-        <DropdownMenuItem
-          onClick={() => {
-            if (roomId) {
-              return toast.error('User have room');
-            }
-            handleDelete(id);
-          }}
-        >
-          <TrashIcon className="w-4 h-4 mr-2" />
-          Delete
+        <DropdownMenuItem asChild>
+          <AlertConfirmation
+            onConfirm={() => {
+              if (roomId) {
+                return toast.error('User have room');
+              }
+              handleDelete(id);
+            }}
+          />
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
+  );
+}
+
+interface AlertConfirmationProps {
+  onConfirm: () => void;
+}
+
+export function AlertConfirmation({ onConfirm }: AlertConfirmationProps) {
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        {/* <Button variant="ghost"> */}
+        <span className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 hover:bg-destructive hover:text-destructive-foreground">
+          <TrashIcon className="w-4 h-4 mr-2" />
+          Delete
+        </span>
+        {/* </Button> */}
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Apakah Yakin Menghapus?</AlertDialogTitle>
+          <AlertDialogDescription>
+            Tindakan ini tidak dapat diulang. Anda yakin ingin melanjutkan?
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>
+            <Cross2Icon className="w-4 h-4 mr-2" />
+            Tidak
+          </AlertDialogCancel>
+          <Button variant={'destructive'} asChild>
+            <AlertDialogAction onClick={onConfirm}>
+              <CheckIcon className="w-4 h-4 mr-2" />
+              Lanjut
+            </AlertDialogAction>
+          </Button>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 }
