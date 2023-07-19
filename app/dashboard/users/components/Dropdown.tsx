@@ -16,9 +16,10 @@ import { mutate } from 'swr';
 
 interface DropdownProps {
   id: string;
+  roomId?: string;
 }
 
-export default function Dropdown({ id }: DropdownProps) {
+export default function Dropdown({ id, roomId }: DropdownProps) {
   function handleDelete(id: string) {
     fetch(`/api/users/${id}`, {
       method: 'DELETE',
@@ -58,6 +59,9 @@ export default function Dropdown({ id }: DropdownProps) {
         </DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => {
+            if (roomId) {
+              return toast.error('User have room');
+            }
             handleDelete(id);
           }}
         >

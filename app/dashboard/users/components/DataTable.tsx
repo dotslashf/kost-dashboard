@@ -73,7 +73,7 @@ export const columns: ColumnDef<UserWithRoom>[] = [
       const user = row.original;
       return (
         <div className="flex justify-center">
-          <Dropdown id={user.id} />
+          <Dropdown id={user.id} roomId={user.room?.id} />
         </div>
       );
     },

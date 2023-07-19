@@ -10,10 +10,14 @@ export async function DELETE(req: NextApiRequest, { params }: { params: { id: st
     const user = await prisma.user.findUnique({
         where: {
             id: params.id
+        },
+        select: {
+            room: true
         }
     });
 
     if (!user) return new Response(JSON.stringify({ error: 'User not found' }), { status: 404 });
+    if (user.room) return new Response(JSON.stringify({ error: 'User have room' }), { status: 400 });
 
     await prisma.user.delete({
         where: {
