@@ -39,7 +39,26 @@ export const columns: ColumnDef<UserWithRoom>[] = [
     accessorKey: 'name',
     header: 'Nama',
     cell: ({ row }) => {
-      return <span className="flex w-[180px]">{row.original.name}</span>;
+      return (
+        <div className="flex w-[180px] space-x-2">
+          <span className="capitalize">{row.original.name} </span>
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: 'phone',
+    header: 'No. HP',
+    cell: ({ row }) => {
+      return row.original.phone ? (
+        <div>
+          <Badge variant={'outline'}>+62{row.original.phone}</Badge>
+        </div>
+      ) : (
+        <div>
+          <Badge variant={'outline'}>-</Badge>
+        </div>
+      );
     },
   },
   {

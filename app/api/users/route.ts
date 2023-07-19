@@ -41,6 +41,7 @@ export async function GET(req: NextApiRequest) {
             name: true,
             role: true,
             createdAt: true,
+            phone: true,
             room: {
                 select: {
                     id: true,
