@@ -1,7 +1,13 @@
 'use client';
 
-import Button from '@/app/components/Button';
-import Input from '@/app/components/Input';
+import { Button } from '@/components/ui/button';
+import CustomInput from '@/components/custom/Input';
+import {
+  EnterIcon,
+  EnvelopeClosedIcon,
+  LockClosedIcon,
+  ReloadIcon,
+} from '@radix-ui/react-icons';
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -56,26 +62,36 @@ const AuthFrom = () => {
     <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
       <div className="px-4 py-8 bg-white rounded-md shadow sm:px-10">
         <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
-          <Input
+          <CustomInput
             label="Email"
             id="email"
             errors={errors}
             type="email"
             disabled={isLoading}
             register={register}
+            icon={<EnvelopeClosedIcon className="w-4 h-4" />}
           />
-          <Input
+          <CustomInput
             label="Password"
             id="password"
             errors={errors}
             type="password"
             disabled={isLoading}
             register={register}
+            icon={<LockClosedIcon className="w-4 h-4" />}
           />
           <div>
-            <Button fullWidth disabled={isLoading} type="submit">
-              {isLoading ? 'Loading...' : 'Sign in'}
-            </Button>
+            {isLoading ? (
+              <Button type="submit" disabled className="w-full">
+                <ReloadIcon className="w-4 h-4 mr-2 animate-spin" />
+                Loading...
+              </Button>
+            ) : (
+              <Button type="submit" className="w-full">
+                <EnterIcon className="w-4 h-4 mr-2" />
+                Masuk
+              </Button>
+            )}
           </div>
         </form>
       </div>
