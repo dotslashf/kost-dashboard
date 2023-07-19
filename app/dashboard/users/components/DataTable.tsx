@@ -80,9 +80,15 @@ export const columns: ColumnDef<UserWithRoom>[] = [
       const room = row.original.room;
       return (
         <span className="flex w-[100px]">
-          <Badge variant="default" className="cursor-pointer">
-            {room?.name ? room.name : 'Empty'}
-          </Badge>
+          {room?.name ? (
+            <Badge variant="default" className="mr-2 cursor-pointer">
+              {room.name}
+            </Badge>
+          ) : (
+            <Badge variant="outline" className="mr-2 cursor-pointer">
+              Kosong
+            </Badge>
+          )}
         </span>
       );
     },
