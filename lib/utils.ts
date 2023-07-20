@@ -10,3 +10,7 @@ export function cn(...inputs: ClassValue[]) {
 export function formatDate(date: Date) {
   return format(new Date(date), "EEEE. MMM dd, yyyy", { locale: id })
 }
+
+export function formatPhone(phone: string) {
+  return phone.split('')[0] === '0' || phone.startsWith('+62') ? phone.substring(1) : phone
+}

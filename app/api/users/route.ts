@@ -2,7 +2,8 @@ import { NextResponse } from 'next/server'
 import { getToken } from "next-auth/jwt"
 import bcrypt from 'bcrypt';
 import prisma from '@/app/libs/prisma';
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextApiRequest } from 'next';
+import { formatPhone } from '@/lib/utils';
 
 export async function POST(req: any) {
     const token = await getToken({ req })
@@ -15,19 +16,20 @@ export async function POST(req: any) {
     })
 
     if (user) return new Response(JSON.stringify({ error: 'User already exists' }), { status: 400 });
+    const phone = formatPhone(body.phone);
 
     const newUser = await prisma.user.create({
         data: {
             email: body.email,
             name: body.name,
             role: 'USER',
-            password: bcrypt.hashSync('password', 10)
+            password: bcrypt.hashSync('password', 10),
+            phone,
         }
     });
 
     return NextResponse.json({
-        message: 'User created successfully',
-        data: newUser
+        message: 'Penghuni berhasil ditambahkan',
     })
 }
 

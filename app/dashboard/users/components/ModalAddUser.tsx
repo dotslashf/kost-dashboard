@@ -14,6 +14,7 @@ import {
   CheckIcon,
   EnvelopeClosedIcon,
   LetterCaseCapitalizeIcon,
+  MobileIcon,
   PlusIcon,
   ReloadIcon,
 } from '@radix-ui/react-icons';
@@ -44,6 +45,7 @@ export default function ModalAddUser() {
       reset({
         name: '',
         email: '',
+        phone: '',
       });
     }
   }, [formState.isSubmitSuccessful, reset]);
@@ -56,8 +58,9 @@ export default function ModalAddUser() {
     })
       .then(async (res) => {
         if (res.ok) {
+          const { message } = await res.json();
           setIsOpen(false);
-          toast.success('User added');
+          toast.success(message);
           mutate('/api/users');
         } else {
           const { error } = await res.json();
@@ -101,6 +104,15 @@ export default function ModalAddUser() {
             required={true}
             errors={errors}
             icon={<EnvelopeClosedIcon />}
+          />
+          <CustomInput
+            label="No. HP"
+            type="number"
+            id="phone"
+            register={register}
+            required={true}
+            errors={errors}
+            icon={<MobileIcon />}
           />
         </div>
         <DialogFooter>
