@@ -17,13 +17,13 @@ import {
   getFilteredRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import Dropdown from './Dropdown';
+import AlertDialogConfirmation from './AlertDialogConfirmation';
 import { Room, User } from '@prisma/client';
 import { formatDate } from '@/lib/utils';
 import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import CustomInput from '@/components/custom/Input';
+import ModalEditUser from './ModalEditUser';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -99,8 +99,9 @@ export const columns: ColumnDef<UserWithRoom>[] = [
     cell: ({ row }) => {
       const user = row.original;
       return (
-        <div className="flex justify-center">
-          <Dropdown id={user.id} roomId={user.room?.id} />
+        <div className="flex justify-center space-x-2">
+          <ModalEditUser user={user} />
+          <AlertDialogConfirmation id={user.id} />
         </div>
       );
     },

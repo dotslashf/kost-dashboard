@@ -107,7 +107,7 @@ export default function ModalAddUser() {
           {isLoading ? (
             <Button type="submit" disabled>
               <ReloadIcon className="w-4 h-4 mr-2 animate-spin" />
-              Saving...
+              Menyimpan...
             </Button>
           ) : (
             <Button type="submit" onClick={handleSubmit(onSubmit)}>
