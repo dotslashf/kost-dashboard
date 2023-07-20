@@ -38,6 +38,12 @@ export async function PUT(req: any, { params }: { params: { id: string } }) {
     try {
         const body = await req.json();
         const phone = formatPhone(body.phone);
+        const isEmailExists = await prisma.user.findUnique({
+            where: {
+                email: body.email
+            }
+        })
+        if (isEmailExists) return new Response(JSON.stringify({ error: 'Email sudah digunakan' }), { status: 400 });
         await prisma.user.update({
             where: {
                 id: params.id,
