@@ -1,28 +1,22 @@
-'use client';
-
 import CustomInput from '@/components/custom/Input';
 import { Button } from '@/components/ui/button';
+import { DialogHeader, DialogFooter } from '@/components/ui/dialog';
 import {
   Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
+  DialogContent,
+  DialogTitle,
+} from '@radix-ui/react-dialog';
 import {
-  CheckIcon,
-  EnvelopeClosedIcon,
   LetterCaseCapitalizeIcon,
-  PlusIcon,
+  EnvelopeClosedIcon,
   ReloadIcon,
 } from '@radix-ui/react-icons';
-import { useEffect, useState } from 'react';
-import { SubmitHandler, FieldValues, useForm } from 'react-hook-form';
-import toast from 'react-hot-toast';
-import { mutate } from 'swr';
+import { PlusIcon, CheckIcon } from 'lucide-react';
+import { useState } from 'react';
+import { FieldValues, useForm } from 'react-hook-form';
 
-export function ModalUser() {
+export default function ModalEditUser() {
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -39,39 +33,6 @@ export function ModalUser() {
     },
   });
 
-  useEffect(() => {
-    if (formState.isSubmitSuccessful) {
-      reset({
-        name: '',
-        email: '',
-      });
-    }
-  }, [formState.isSubmitSuccessful, reset]);
-
-  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    setIsLoading(true);
-    fetch('/api/users', {
-      method: 'POST',
-      body: JSON.stringify(data),
-    })
-      .then(async (res) => {
-        if (res.ok) {
-          setIsOpen(false);
-          toast.success('User added');
-          mutate('/api/users');
-        } else {
-          const { error } = await res.json();
-          throw new Error(error);
-        }
-      })
-      .catch((err) => {
-        toast.error(err.message);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
-
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
@@ -81,11 +42,11 @@ export function ModalUser() {
       </DialogTrigger>
       <DialogContent className="max-w-sm md:max-w-md">
         <DialogHeader>
-          <DialogTitle>Add New User</DialogTitle>
+          <DialogTitle>Tambah Penghuni Baru</DialogTitle>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <CustomInput
-            label="name"
+            label="nama"
             type="text"
             id="name"
             register={register}
@@ -110,7 +71,12 @@ export function ModalUser() {
               Saving...
             </Button>
           ) : (
-            <Button type="submit" onClick={handleSubmit(onSubmit)}>
+            <Button
+              type="submit"
+              onClick={() => {
+                console.log('');
+              }}
+            >
               <CheckIcon className="w-4 h-4 mr-2" />
               Simpan
             </Button>

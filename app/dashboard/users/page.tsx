@@ -1,5 +1,5 @@
 import MainLayout from '@/app/components/Layouts/Main';
-import { ModalUser } from './components/ModalUser';
+import ModalAddUser from './components/ModalAddUser';
 import Table from './components/Table';
 
 export const generateMetadata = () => ({
@@ -11,7 +11,7 @@ export default async function UserDashboard() {
     <MainLayout>
       <div className="flex flex-col w-full h-full p-6 space-y-4 bg-white border rounded-lg shadow-sm">
         <div>
-          <ModalUser />
+          <ModalAddUser />
         </div>
         <Table />
       </div>

@@ -1,86 +1,122 @@
 'use client';
 
-import Input from '@/app/components/Input';
-import Modal from '@/app/components/Modal';
-import { DialogHeader } from '@/components/ui/dialog';
+import CustomInput from '@/components/custom/Input';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
-  DialogTrigger,
   DialogContent,
+  DialogFooter,
+  DialogHeader,
   DialogTitle,
-  DialogDescription,
-} from '@radix-ui/react-dialog';
-import { useState } from 'react';
-import { useForm, FieldValues, SubmitHandler } from 'react-hook-form';
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import {
+  CheckIcon,
+  EnvelopeClosedIcon,
+  LetterCaseCapitalizeIcon,
+  PlusIcon,
+  ReloadIcon,
+} from '@radix-ui/react-icons';
+import { useEffect, useState } from 'react';
+import { SubmitHandler, FieldValues, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { mutate } from 'swr';
 
-// const ModalAddUser = () => {
-//   const [isLoading, setIsLoading] = useState(false);
-//   const [isSuccessful, setIsSuccessful] = useState(false);
+export default function ModalAddUser() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-//   const {
-//     register,
-//     handleSubmit,
-//     formState: { errors },
-//   } = useForm<FieldValues>({
-//     defaultValues: {
-//       email: '',
-//       password: '',
-//     },
-//   });
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState,
+    formState: { errors },
+  } = useForm<FieldValues>({
+    defaultValues: {
+      name: '',
+      email: '',
+    },
+  });
 
-//   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-//     setIsLoading(true);
-//     fetch('/api/users', {
-//       method: 'POST',
-//       body: JSON.stringify(data),
-//     })
-//       .then(async (res) => {
-//         if (res.ok) {
-//           setIsSuccessful(true);
-//         } else {
-//           const { error } = await res.json();
-//           throw new Error(error);
-//         }
-//       })
-//       .catch((err) => {
-//         toast.error(err.message);
-//       })
-//       .finally(() => {
-//         setIsLoading(false);
-//       });
-//   };
+  useEffect(() => {
+    if (formState.isSubmitSuccessful) {
+      reset({
+        name: '',
+        email: '',
+      });
+    }
+  }, [formState.isSubmitSuccessful, reset]);
 
-//   return (
-//     <Modal
-//       id="modal-new-user"
-//       title="Add New User"
-//       onSubmitted={handleSubmit(onSubmit)}
-//       isLoading={isLoading}
-//       isSuccessful={isSuccessful}
-//     >
-//       <form className="space-y-4">
-//         <Input
-//           label="Name"
-//           id="name"
-//           errors={errors}
-//           type="text"
-//           disabled={isLoading}
-//           register={register}
-//           icon={<UserCircleIcon />}
-//         />
-//         <Input
-//           label="Email"
-//           id="email"
-//           errors={errors}
-//           type="email"
-//           disabled={isLoading}
-//           register={register}
-//           icon={<AtSymbolIcon />}
-//         />
-//       </form>
-//     </Modal>
-//   );
-// };
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    setIsLoading(true);
+    fetch('/api/users', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    })
+      .then(async (res) => {
+        if (res.ok) {
+          setIsOpen(false);
+          toast.success('User added');
+          mutate('/api/users');
+        } else {
+          const { error } = await res.json();
+          throw new Error(error);
+        }
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
 
-// export default ModalAddUser;
+  return (
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogTrigger asChild>
+        <Button>
+          <PlusIcon className="w-4 h-4 mr-2" /> Tambah Penghuni
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="max-w-sm md:max-w-md">
+        <DialogHeader>
+          <DialogTitle>Tambah Penghuni Baru</DialogTitle>
+        </DialogHeader>
+        <div className="grid gap-4 py-4">
+          <CustomInput
+            label="nama"
+            type="text"
+            id="name"
+            register={register}
+            required={true}
+            errors={errors}
+            icon={<LetterCaseCapitalizeIcon />}
+          />
+          <CustomInput
+            label="email"
+            type="email"
+            id="email"
+            register={register}
+            required={true}
+            errors={errors}
+            icon={<EnvelopeClosedIcon />}
+          />
+        </div>
+        <DialogFooter>
+          {isLoading ? (
+            <Button type="submit" disabled>
+              <ReloadIcon className="w-4 h-4 mr-2 animate-spin" />
+              Saving...
+            </Button>
+          ) : (
+            <Button type="submit" onClick={handleSubmit(onSubmit)}>
+              <CheckIcon className="w-4 h-4 mr-2" />
+              Simpan
+            </Button>
+          )}
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
