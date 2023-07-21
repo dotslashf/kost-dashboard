@@ -12,6 +12,7 @@ interface InputProps {
   disabled?: boolean;
   register: UseFormRegister<FieldValues>;
   icon?: React.ReactNode;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }
 
 export function CustomInput(props: InputProps) {
@@ -29,6 +30,7 @@ export function CustomInput(props: InputProps) {
           id={props.id}
           disabled={props.disabled}
           {...props.register(props.id, { required: props.required })}
+          onChange={props.onChange}
         />
         <div className="absolute inset-y-0 left-0 z-20 flex items-center pl-4 pointer-events-none">
           {props.icon ? (
