@@ -29,6 +29,7 @@ model Room {
   startRentedAt DateTime?
   endRentedAt   DateTime?
   price         Int?
+  details       String?
   user          User?          @relation(fields: [userId], references: [id])
   RoomRentLogs  RoomRentLogs[]
 }
