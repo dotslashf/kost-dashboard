@@ -27,7 +27,7 @@ import { mutate } from 'swr';
 export default function ModalAddRoom() {
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [formattedPrice, setFormattedPrice] = useState('');
+  const [formattedPrice, setFormattedPrice] = useState('Rp 0');
 
   const {
     register,
