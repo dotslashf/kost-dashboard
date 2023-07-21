@@ -21,17 +21,15 @@ model User {
 }
 
 model Room {
-  id            String         @id @default(uuid())
-  name          String
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-  userId        String?        @unique
-  startRentedAt DateTime?
-  endRentedAt   DateTime?
-  price         Int?
-  details       String?
-  user          User?          @relation(fields: [userId], references: [id])
-  RoomRentLogs  RoomRentLogs[]
+  id           String         @id @default(uuid())
+  name         String
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  userId       String?        @unique
+  price        Int?
+  details      String?
+  user         User?          @relation(fields: [userId], references: [id])
+  RoomRentLogs RoomRentLogs[]
 }
 
 model RoomRentLogs {
