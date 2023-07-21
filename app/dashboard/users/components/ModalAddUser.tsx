@@ -1,6 +1,6 @@
 'use client';
 
-import CustomInput from '@/components/custom/Input';
+import { CustomInput } from '@/components/custom/Input';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,

@@ -14,3 +14,7 @@ export function formatDate(date: Date) {
 export function formatPhone(phone: string) {
   return phone.split('')[0] === '0' || phone.startsWith('+62') ? phone.substring(1) : phone
 }
+
+export function formatCurrency(amount: number) {
+  return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(amount)
+}

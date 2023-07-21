@@ -1,6 +1,6 @@
 'use client';
 
-import { CustomInput } from '@/components/custom/Input';
+import { CustomInput, TextareaWithLabel } from '@/components/custom/Input';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -10,12 +10,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { formatCurrency } from '@/lib/utils';
 import {
+  CardStackIcon,
   CheckIcon,
-  EnvelopeClosedIcon,
-  LetterCaseCapitalizeIcon,
-  MobileIcon,
-  Pencil1Icon,
+  FrameIcon,
   PlusIcon,
   ReloadIcon,
 } from '@radix-ui/react-icons';
@@ -23,15 +23,11 @@ import { useEffect, useState } from 'react';
 import { SubmitHandler, FieldValues, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { mutate } from 'swr';
-import { UserWithRoom } from './DataTable';
 
-interface ModalEditUserProps {
-  user: UserWithRoom;
-}
-
-export default function ModalEditUser(props: ModalEditUserProps) {
+export default function ModalAddRoom() {
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [formattedPrice, setFormattedPrice] = useState('');
 
   const {
     register,
@@ -41,24 +37,33 @@ export default function ModalEditUser(props: ModalEditUserProps) {
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
-      name: props.user.name,
-      email: props.user.email,
-      phone: props.user.phone,
+      name: '',
+      price: '',
+      details: '',
     },
   });
 
+  useEffect(() => {
+    if (formState.isSubmitSuccessful) {
+      reset({
+        name: '',
+        price: '',
+        details: '',
+      });
+    }
+  }, [formState.isSubmitSuccessful, reset]);
+
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    setIsLoading(true);
-    fetch(`/api/users/${props.user.id}`, {
-      method: 'PUT',
+    fetch('/api/rooms', {
+      method: 'POST',
       body: JSON.stringify(data),
     })
       .then(async (res) => {
         if (res.ok) {
-          setIsOpen(false);
           const { message } = await res.json();
+          setIsOpen(false);
           toast.success(message);
-          mutate('/api/users');
+          mutate('/api/rooms');
         } else {
           const { error } = await res.json();
           throw new Error(error);
@@ -75,41 +80,41 @@ export default function ModalEditUser(props: ModalEditUserProps) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant={'outline'}>
-          <Pencil1Icon className="w-4 h-4" />
+        <Button>
+          <PlusIcon className="w-4 h-4 mr-2" /> Tambah Kamar
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-sm md:max-w-md">
         <DialogHeader>
-          <DialogTitle>Edit Penghuni</DialogTitle>
+          <DialogTitle>Tambah Kamar Baru</DialogTitle>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <CustomInput
-            label="nama"
-            type="text"
+            label="Nomor Kamar"
+            type="number"
             id="name"
             register={register}
             required={true}
             errors={errors}
-            icon={<LetterCaseCapitalizeIcon />}
+            icon={<FrameIcon />}
           />
           <CustomInput
-            label="email"
-            type="email"
-            id="email"
-            register={register}
-            required={true}
-            errors={errors}
-            icon={<EnvelopeClosedIcon />}
-          />
-          <CustomInput
-            label="No. hp"
+            label="harga/bulan"
             type="number"
-            id="phone"
+            id="price"
             register={register}
             required={true}
             errors={errors}
-            icon={<MobileIcon />}
+            icon={<CardStackIcon />}
+            onChange={(e) => {
+              setFormattedPrice(formatCurrency(Number(e.target.value)));
+            }}
+          />
+          <Input value={formattedPrice} disabled />
+          <TextareaWithLabel
+            label="Detail Kamar"
+            register={register}
+            id="details"
           />
         </div>
         <DialogFooter>

@@ -1,9 +1,10 @@
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 import { FieldValues, FieldErrors, UseFormRegister } from 'react-hook-form';
+import { Textarea } from '../ui/textarea';
 
 interface InputProps {
-  label: string;
+  label?: string;
   id: string;
   type?: React.HTMLInputTypeAttribute;
   required?: boolean;
@@ -13,12 +14,14 @@ interface InputProps {
   icon?: React.ReactNode;
 }
 
-const CustomInput = (props: InputProps) => {
+export function CustomInput(props: InputProps) {
   return (
     <div className="flex flex-col">
-      <Label htmlFor={props.label} className="mb-2 text-left capitalize">
-        {props.label}
-      </Label>
+      {props.label && (
+        <Label htmlFor={props.label} className="mb-2 text-left capitalize">
+          {props.label}
+        </Label>
+      )}
       <div className="relative">
         <Input
           type={props.type ? props.type : 'text'}
@@ -51,6 +54,23 @@ const CustomInput = (props: InputProps) => {
       </div>
     </div>
   );
-};
+}
 
-export default CustomInput;
+interface TextareaProps {
+  id: string;
+  label: string;
+  register: UseFormRegister<FieldValues>;
+  required?: boolean;
+}
+export function TextareaWithLabel(props: TextareaProps) {
+  return (
+    <div className="grid w-full gap-1.5">
+      <Label htmlFor="message">{props.label}</Label>
+      <Textarea
+        placeholder="Jelaskan kamar disini..."
+        id="message"
+        {...props.register(props.id, { required: props.required })}
+      />
+    </div>
+  );
+}

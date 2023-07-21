@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import CustomInput from '@/components/custom/Input';
+import { CustomInput } from '@/components/custom/Input';
 import {
   EnterIcon,
   EnvelopeClosedIcon,
