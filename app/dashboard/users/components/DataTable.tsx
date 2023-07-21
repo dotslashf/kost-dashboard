@@ -82,7 +82,7 @@ export const columns: ColumnDef<UserWithRoom>[] = [
         <span className="flex w-[100px]">
           {room?.name ? (
             <Badge variant="default" className="mr-2 cursor-pointer">
-              {room.name}
+              Kamar {room.name}
             </Badge>
           ) : (
             <Badge variant="outline" className="mr-2 cursor-pointer">
