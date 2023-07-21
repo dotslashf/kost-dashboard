@@ -25,10 +25,11 @@ model Room {
   name          String
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
-  userId        String         @unique
+  userId        String?        @unique
   startRentedAt DateTime?
   endRentedAt   DateTime?
-  user          User           @relation(fields: [userId], references: [id])
+  price         Int?
+  user          User?          @relation(fields: [userId], references: [id])
   RoomRentLogs  RoomRentLogs[]
 }
 
