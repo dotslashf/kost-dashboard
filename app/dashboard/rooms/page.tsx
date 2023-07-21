@@ -1,6 +1,6 @@
 import MainLayout from '@/app/components/Layouts/Main';
 import ModalAddRoom from './components/ModalAddRooms';
-// import Table from './components/Table';
+import Cards from './components/Cards';
 
 export const generateMetadata = () => ({
   title: 'Dashboard/Rooms',
@@ -13,7 +13,7 @@ export default async function RoomsDashboard() {
         <div>
           <ModalAddRoom />
         </div>
-        {/* <Table /> */}
+        <Cards />
       </div>
     </MainLayout>
   );
