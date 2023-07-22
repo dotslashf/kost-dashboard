@@ -50,7 +50,7 @@ export default function Cards() {
             </div>
             <CardDescription>{room.details}</CardDescription>
             <Badge className="mt-2 " variant={'default'}>
-              {formatCurrency(room.price || 0)}
+              {formatCurrency(room.price || 0)} / Bulan
             </Badge>
           </CardContent>
           {room.rentBy && (
