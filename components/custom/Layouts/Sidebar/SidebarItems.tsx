@@ -33,13 +33,19 @@ const SidebarItems = () => {
     <nav className="flex flex-col flex-wrap justify-between w-full h-full p-6">
       <div className="space-y-1.5">
         {items.map((item) => {
+          let isActive = false;
+          if (item.title === 'Dashboard') {
+            isActive = pathname === item.link;
+          } else {
+            isActive = pathname.includes(item.link);
+          }
           return (
             <SidebarItem
               key={item.title + '_' + new Date().toISOString()}
               title={item.title}
               icon={item.icon}
               link={item.link}
-              isActive={item.link === pathname}
+              isActive={isActive}
               type="link"
             />
           );
