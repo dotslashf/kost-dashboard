@@ -1,6 +1,6 @@
 'use client';
 
-import { CustomInput, TextareaWithLabel } from '@/components/custom/Input';
+import { CustomInput, TextAreaWithLabel } from '@/components/custom/Input';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -27,7 +27,7 @@ import { mutate } from 'swr';
 export default function ModalAddRoom() {
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [formattedPrice, setFormattedPrice] = useState('Rp 0');
+  const [formattedPrice, setFormattedPrice] = useState(formatCurrency(0));
 
   const {
     register,
@@ -111,7 +111,7 @@ export default function ModalAddRoom() {
             }}
           />
           <Input value={formattedPrice} disabled />
-          <TextareaWithLabel
+          <TextAreaWithLabel
             label="Detail Kamar"
             register={register}
             id="details"

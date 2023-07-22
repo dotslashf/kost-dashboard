@@ -13,6 +13,22 @@ export async function GET(req: any, { params }: { params: { id: string } }) {
     where: {
       id: params.id,
     },
+    include: {
+      user: {
+        select: {
+          name: true,
+          email: true,
+          phone: true,
+        },
+      },
+      RoomRentLogs: {
+        select: {
+          id: true,
+          startRentedAt: true,
+          endRentedAt: true,
+        },
+      },
+    },
   });
 
   return NextResponse.json({
