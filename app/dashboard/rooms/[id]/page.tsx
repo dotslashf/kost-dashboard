@@ -25,7 +25,7 @@ interface RoomByIdProps {
 export const generateMetadata = async ({ params }: RoomByIdProps) => {
   const { name } = await getRoomById(params.id);
   return {
-    title: `Kamar ${name}`,
+    title: `Dashboard | Kamar ${name}`,
   };
 };
 
