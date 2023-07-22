@@ -142,6 +142,7 @@ export function DisabledTextAreaWithLabel(props: DisabledTextAreaProps) {
         id="message"
         value={props.value}
         className="h-24"
+        readOnly
       />
     </div>
   );

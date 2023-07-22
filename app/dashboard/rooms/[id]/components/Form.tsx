@@ -10,12 +10,16 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { toast } from 'react-hot-toast';
+import { mutate } from 'swr';
 
 interface FormProps {
   data: {
     name: string;
     price: number | null;
     details: string | null;
+    id: string;
+    setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
   };
 }
 
@@ -39,7 +43,31 @@ export default function Form(props: FormProps) {
   });
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    console.log(data);
+    setIsLoading(true);
+    fetch(`/api/rooms/${props.data.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      .then(async (res) => {
+        if (res.ok) {
+          const { message } = await res.json();
+          toast.success(message);
+          props.data.setIsEditing(false);
+          mutate(`/api/rooms/${props.data.id}`);
+        } else {
+          const { error } = await res.json();
+          throw new Error(error);
+        }
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   return (

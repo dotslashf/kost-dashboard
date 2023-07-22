@@ -57,6 +57,8 @@ export default function Content(props: FormProps) {
             name: data.room.name,
             details: data.room.details,
             price: data.room.price,
+            id: data.room.id,
+            setIsEditing: setIsEditing,
           }}
         />
       ) : (

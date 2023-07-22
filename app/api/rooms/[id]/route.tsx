@@ -58,7 +58,7 @@ export async function PUT(req: any, { params }: { params: { id: string } }) {
     },
     data: {
       name: body.name,
-      price: body.price,
+      price: Number(body.price),
       details: body.details,
     },
   });
