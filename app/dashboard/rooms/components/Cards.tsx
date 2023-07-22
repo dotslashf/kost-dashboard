@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Card,
   CardHeader,
@@ -10,32 +12,27 @@ import { CalendarIcon, FrameIcon } from '@radix-ui/react-icons';
 import { Badge } from '@/components/ui/badge';
 import { cn, formatCurrency, formatDate } from '@/lib/utils';
 import AlertPulse from '@/components/custom/AlertPulse';
+import { Room } from '@prisma/client';
+import useSWR from 'swr';
+import fetcher from '@/app/libs/fetcher';
 
-const data = [
-  {
-    id: 1,
-    name: 'Kamar 1',
-    price: 1000000,
-    rentBy: '',
-    details: '5x4 meter',
-    startRent: new Date(),
-    endRent: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
-  },
-  {
-    id: 2,
-    name: 'Kamar 2',
-    price: 1000000,
-    rentBy: 'Abdul',
-    details: '5x4 meter',
-    startRent: new Date(),
-    endRent: new Date(new Date().setFullYear(new Date().getFullYear() + 2)),
-  },
-];
+interface RoomWithRent extends Room {
+  rentBy: string;
+  startRentedAt: Date;
+  endRentedAt: Date;
+}
 
 export default function Cards() {
+  const { data, error } = useSWR<{ rooms: RoomWithRent[] }>(
+    '/api/rooms',
+    fetcher,
+    {}
+  );
+  if (!data) return <div>Loading...</div>;
+  if (error) return <div>Error...</div>;
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-4 gap-y-4">
-      {data.map((room) => (
+      {data.rooms.map((room) => (
         <Card
           key={room.id}
           className={cn(
@@ -44,16 +41,16 @@ export default function Cards() {
         >
           {!room.rentBy && <AlertPulse />}
           <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-            <CardTitle className="font-medium ">{room.name}</CardTitle>
+            <CardTitle className="font-medium ">Kamar {room.name}</CardTitle>
             <FrameIcon className="w-4 h-4" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {room.rentBy ? room.rentBy : '-'}
+              {room.rentBy ? room.rentBy : 'Kosong'}
             </div>
             <CardDescription>{room.details}</CardDescription>
             <Badge className="mt-2 " variant={'default'}>
-              {formatCurrency(room.price)}
+              {formatCurrency(room.price || 0)}
             </Badge>
           </CardContent>
           {room.rentBy && (
@@ -66,7 +63,7 @@ export default function Cards() {
               >
                 <span className="font-semibold">Masuk</span>
                 <CalendarIcon className="w-4 h-4 mx-2" />
-                {formatDate(room.startRent)}
+                {formatDate(room.startRentedAt)}
               </Badge>
               <Badge
                 variant={'destructive'}
@@ -76,7 +73,7 @@ export default function Cards() {
               >
                 <span className="font-semibold">Keluar</span>
                 <CalendarIcon className="w-4 h-4 mx-2" />
-                {formatDate(room.endRent)}
+                {formatDate(room.endRentedAt)}
               </Badge>
             </CardFooter>
           )}
