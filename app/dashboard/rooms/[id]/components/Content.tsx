@@ -14,6 +14,7 @@ import useSWR from 'swr';
 import fetcher from '@/app/libs/fetcher';
 import Form from './Form';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import CardLoading from '../../components/CardsLoading';
 
 export interface RoomWithRentLogs extends Room {
   user: {
@@ -41,7 +42,12 @@ export default function Content(props: FormProps) {
     {}
   );
 
-  if (!data) return <div>Loading...</div>;
+  if (!data)
+    return (
+      <div className="max-w-sm">
+        <CardLoading />
+      </div>
+    );
   if (error) return <div>Error...</div>;
   return (
     <Card className={cn('lg:max-w-sm')}>

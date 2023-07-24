@@ -16,6 +16,7 @@ import { Room } from '@prisma/client';
 import useSWR from 'swr';
 import fetcher from '@/app/libs/fetcher';
 import Link from 'next/link';
+import CardLoading from './CardsLoading';
 
 interface RoomWithRent extends Room {
   rentBy: string;
@@ -29,7 +30,14 @@ export default function Cards() {
     fetcher,
     {}
   );
-  if (!data) return <div>Loading...</div>;
+  if (!data)
+    return (
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-4 gap-y-4">
+        {Array.from({ length: 3 }).map((_, i) => (
+          <CardLoading key={i} />
+        ))}
+      </div>
+    );
   if (error) return <div>Error...</div>;
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-4 gap-y-4">
