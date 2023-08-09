@@ -18,7 +18,7 @@ const Sidebar = () => {
         )}
         onClick={() => setIsSidebarOpen(false)}
       ></div>
-      <div className="sticky inset-x-0 top-0 px-4 bg-white border-y sm:px-6 md:px-8 lg:hidden dark:bg-slate-800 dark:border-slate-700">
+      <div className="sticky inset-x-0 top-0 z-20 px-4 bg-white border-y sm:px-6 md:px-8 lg:hidden dark:bg-slate-800 dark:border-slate-700">
         <div className="flex justify-end py-2">
           <Button
             variant={'secondary'}
